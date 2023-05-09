@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Player {
-  id        String   @id @default(uuid())
-  name      String
-  tag       String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  Rank      Rank     @relation(fields: [rankId], references: [id])
-  rankId    String   @map("rank_id")
+  id            String          @id @default(uuid())
+  name          String
+  tag           String
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  Rank          Rank            @relation(fields: [rankId], references: [id])
+  rankId        String          @map("rank_id")
+  PlayerOnMatch PlayerOnMatch[]
 
   @@unique([name, tag])
   @@map("players")
@@ -33,4 +34,25 @@ model Rank {
   Player    Player[]
 
   @@map("ranks")
+}
+
+model Match {
+  id            String          @id @default(uuid())
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  PlayerOnMatch PlayerOnMatch[]
+
+  @@map("matches")
+}
+
+model PlayerOnMatch {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  match     Match    @relation(fields: [matchId], references: [id])
+  matchId   String   @map("match_id")
+  player    Player   @relation(fields: [playerId], references: [id])
+  playerId  String   @map("player_id")
+
+  @@map("players_on_matches")
 }
