@@ -8,4 +8,8 @@ export class MatchesService {
   async findAll() {
     return await this.matchesRepository.findAll();
   }
+
+  async findById(id: string) {
+    return await this.matchesRepository.findByPlayerId(id);
+  }
 }

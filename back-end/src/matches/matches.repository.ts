@@ -24,4 +24,25 @@ export class MatchesRepository {
       },
     });
   }
+
+  findByPlayerId(id: string) {
+    return this.prisma.match.findMany({
+      where: { PlayerOnMatch: { some: { playerId: id } } },
+      select: {
+        id: true,
+        PlayerOnMatch: {
+          select: {
+            player: {
+              select: {
+                id: true,
+                name: true,
+                tag: true,
+                Rank: { select: { id: true, image: true, name: true } },
+              },
+            },
+          },
+        },
+      },
+    });
+  }
 }
