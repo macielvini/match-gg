@@ -8,4 +8,7 @@ export class CreatePlayerDTO {
   @IsString()
   @MaxLength(15)
   tag: string;
+
+  @IsString()
+  rankId: string;
 }

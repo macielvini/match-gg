@@ -9,7 +9,7 @@ export class PlayersRepository {
   create(body: CreatePlayerDTO) {
     return this.prisma.player.upsert({
       where: { name_tag: body },
-      create: body,
+      create: { ...body },
       update: { ...body },
     });
   }
