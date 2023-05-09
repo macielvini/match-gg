@@ -16,7 +16,21 @@ model Player {
   tag       String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  Rank      Rank     @relation(fields: [rankId], references: [id])
+  rankId    String   @map("rank_id")
 
   @@unique([name, tag])
   @@map("players")
+}
+
+model Rank {
+  id        String   @id @default(uuid())
+  name      String
+  value     Int
+  image     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Player    Player[]
+
+  @@map("ranks")
 }
