@@ -18,6 +18,10 @@ export class PlayersService {
     return await this.playersRepository.findById(id);
   }
 
+  async findActive() {
+    return await this.playersRepository.findActive();
+  }
+
   async updateActivity(id: string) {
     const player = await this.findById(id);
     if (!player) throw new NotFoundException('player id not found');

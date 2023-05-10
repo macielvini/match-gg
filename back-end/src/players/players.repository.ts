@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePlayerDTO } from './dtos/create-player-dto';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class PlayersRepository {
@@ -22,6 +23,13 @@ export class PlayersRepository {
 
   findById(id: string) {
     return this.prisma.player.findUnique({ where: { id } });
+  }
+
+  findActive() {
+    const lastMinute = dayjs().subtract(1, 'minute').toDate();
+    return this.prisma.player.findMany({
+      where: { updatedAt: { gt: lastMinute } },
+    });
   }
 
   updateActivity(id: string) {

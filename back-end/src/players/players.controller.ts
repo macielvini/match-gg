@@ -16,6 +16,11 @@ export class PlayersController {
     return this.playersService.findAll();
   }
 
+  @Get('/search')
+  findActive() {
+    return this.playersService.findActive();
+  }
+
   @Patch()
   updateActivity(@Headers() headers: { id: string }) {
     return this.playersService.updateActivity(headers.id);
