@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Patch, Post } from '@nestjs/common';
 import { PlayersService } from './players.service';
 import { CreatePlayerDTO } from './dtos/create-player-dto';
 
@@ -12,7 +12,12 @@ export class PlayersController {
   }
 
   @Get('all')
-  async findAll() {
-    return await this.playersService.findAll();
+  findAll() {
+    return this.playersService.findAll();
+  }
+
+  @Patch()
+  updateActivity(@Headers() headers: { id: string }) {
+    return this.playersService.updateActivity(headers.id);
   }
 }

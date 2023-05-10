@@ -19,4 +19,19 @@ export class PlayersRepository {
       include: { Rank: { select: { id: true, name: true, image: true } } },
     });
   }
+
+  findById(id: string) {
+    return this.prisma.player.findUnique({ where: { id } });
+  }
+
+  updateActivity(id: string) {
+    const now = new Date();
+
+    return this.prisma.player.update({
+      where: { id },
+      data: {
+        updatedAt: now.toISOString(),
+      },
+    });
+  }
 }
