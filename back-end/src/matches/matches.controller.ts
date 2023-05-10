@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Headers } from '@nestjs/common';
 import { MatchesService } from './matches.service';
 
 @Controller('matches')
@@ -6,12 +6,11 @@ export class MatchesController {
   constructor(private readonly matchesService: MatchesService) {}
 
   @Get()
-  findAll() {
-    return this.matchesService.findAll();
-  }
+  find(@Headers() headers: { id: string }) {
+    if (headers.id) {
+      return this.matchesService.findById(headers.id);
+    }
 
-  @Get(':id')
-  findById(@Param() params: { id: string }) {
-    return this.matchesService.findById(params.id);
+    return this.matchesService.findAll();
   }
 }
